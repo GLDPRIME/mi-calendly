@@ -200,8 +200,8 @@ export default function Home() {
                     <input style={s.input} type="email" value={form.email} onChange={e => setForm({...form, email: e.target.value})} placeholder="tu@correo.com" />
                   </div>
                   <div style={s.formGroup}>
-                    <label style={s.label}>Notas adicionales (opcional)</label>
-                    <textarea style={s.textarea} rows={3} value={form.notes} onChange={e => setForm({...form, notes: e.target.value})} placeholder="Motivo de la cita..." />
+                    <label style={s.label}>Número de teléfono (opcional)</label>
+                    <textarea style={s.textarea} rows={3} value={form.notes} onChange={e => setForm({...form, notes: e.target.value})} placeholder="Ej: +56 9 1234 5678" />
                   </div>
                   {error && <p style={s.errorMsg}>{error}</p>}
                 </div>

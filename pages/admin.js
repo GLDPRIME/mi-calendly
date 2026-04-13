@@ -95,7 +95,7 @@ function BookingTable({ bookings, highlight }) {
       <table style={s.table}>
         <thead>
           <tr>
-            {['Fecha','Hora','Nombre','Correo','Notas'].map(h => (
+            {['Fecha','Hora','Nombre','Correo','Teléfono'].map(h => (
               <th key={h} style={s.th}>{h}</th>
             ))}
           </tr>

@@ -31,7 +31,7 @@ export default async function handler(req, res) {
         <tr><td style="padding:6px 16px 6px 0;color:#666">Correo</td><td>${email}</td></tr>
         <tr><td style="padding:6px 16px 6px 0;color:#666">Fecha</td><td>${date}</td></tr>
         <tr><td style="padding:6px 16px 6px 0;color:#666">Hora</td><td>${time}</td></tr>
-        <tr><td style="padding:6px 16px 6px 0;color:#666">Notas</td><td>${notes || '—'}</td></tr>
+        <tr><td style="padding:6px 16px 6px 0;color:#666">Teléfono</td><td>${notes || '—'}</td></tr>
       </table>
       <p style="margin-top:20px;color:#666;font-size:13px">Ver todas las citas → <a href="https://mi-calendly.vercel.app/admin">Panel admin</a></p>
     `
