@@ -6,19 +6,20 @@ const DAYS_SHORT = ['Do','Lu','Ma','Mi','Ju','Vi','Sá']
 
 // ── EDITA AQUÍ TU CONFIGURACIÓN ──────────────────────────────────────────────
 const CONFIG = {
-  hostName: 'Ana López',
-  hostInitials: 'AL',
-  meetingTitle: 'Reunión de 30 minutos',
-  duration: '30 min',
+  hostName: 'Glen Barber',
+  hostInitials: 'GB',
+  meetingTitle: 'Reserva tu corte',
+  duration: '45 min',
   timezone: 'CLT (Santiago)',
-  meetingType: 'Videollamada',
-  // Horarios por día de la semana (1=Lunes … 5=Viernes)
+  meetingType: 'Diagonal Paraguay',
+  // Horarios por día de la semana (1=Lunes … 6=Sábado)
   slots: {
-    1: ['09:00','09:30','10:00','11:00','14:00','15:30'],
-    2: ['09:00','10:30','11:30','14:00','16:00'],
-    3: ['08:30','10:00','11:00','14:30','15:00','16:30'],
-    4: ['09:30','10:00','13:00','14:00','15:00'],
-    5: ['09:00','11:00','12:00','14:00'],
+    1: ['09:00','09:45','10:30','11:15','12:00','12:45','14:00','14:45','15:30','16:15','17:00','17:45','18:30','19:15','20:00','20:45'],
+    2: ['09:00','09:45','10:30','11:15','12:00','12:45','14:00','14:45','15:30','16:15','17:00','17:45','18:30','19:15','20:00','20:45'],
+    3: ['09:00','09:45','10:30','11:15','12:00','12:45','14:00','14:45','15:30','16:15','17:00','17:45','18:30','19:15','20:00','20:45'],
+    4: ['09:00','09:45','10:30','11:15','12:00','12:45','14:00','14:45','15:30','16:15','17:00','17:45','18:30','19:15','20:00','20:45'],
+    5: ['09:00','09:45','10:30','11:15','12:00','12:45','14:00','14:45','15:30','16:15','17:00','17:45','18:30','19:15','20:00','20:45'],
+    6: ['09:00','09:45','10:30','11:15','12:00','12:45','14:00','14:45','15:30','16:15','17:00','17:45','18:30','19:15','20:00','20:45'],
   }
 }
 // ─────────────────────────────────────────────────────────────────────────────
@@ -184,15 +185,15 @@ export default function Home() {
                     <input style={s.input} type="email" value={form.email} onChange={e => setForm({...form, email: e.target.value})} placeholder="tu@correo.com" />
                   </div>
                   <div style={s.formGroup}>
-                    <label style={s.label}>¿De qué quieres hablar? (opcional)</label>
-                    <textarea style={s.textarea} rows={3} value={form.notes} onChange={e => setForm({...form, notes: e.target.value})} placeholder="Motivo de la reunión..." />
+                    <label style={s.label}>Notas adicionales (opcional)</label>
+                    <textarea style={s.textarea} rows={3} value={form.notes} onChange={e => setForm({...form, notes: e.target.value})} placeholder="Motivo de la cita..." />
                   </div>
                   {error && <p style={s.errorMsg}>{error}</p>}
                 </div>
                 <div style={s.btnRow}>
                   <button style={s.btnSecondary} onClick={() => setStep(1)}>← Atrás</button>
                   <button style={{ ...s.btnPrimary, ...(loading ? s.btnDisabled : {}) }} disabled={loading} onClick={confirm}>
-                    {loading ? 'Guardando…' : 'Confirmar reunión'}
+                    {loading ? 'Guardando…' : 'Confirmar cita'}
                   </button>
                 </div>
               </div>
@@ -206,8 +207,8 @@ export default function Home() {
                     <path d="M5 12l5 5L19 7" stroke="#2a7a4f" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
-                <p style={s.confirmTitle}>¡Reunión confirmada!</p>
-                <p style={s.confirmSub}>Te enviaremos un correo con el enlace a la videollamada.</p>
+                <p style={s.confirmTitle}>¡Cita confirmada!</p>
+                <p style={s.confirmSub}>Te esperamos en Diagonal Paraguay. ¡Hasta pronto!</p>
                 <div style={s.confirmCard}>
                   {[
                     ['Reunión', CONFIG.meetingTitle],
@@ -222,7 +223,7 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-                <button style={s.btnSecondary} onClick={reset}>Agendar otra reunión</button>
+                <button style={s.btnSecondary} onClick={reset}>Agendar otra cita</button>
               </div>
             )}
 
