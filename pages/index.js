@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Head from 'next/head'
 
 const MONTHS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
@@ -34,6 +34,16 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [booking, setBooking] = useState(null)
+  const [bookedSlots, setBookedSlots] = useState([])
+
+  // Fetch booked slots when date selected
+  useEffect(() => {
+    if (!selDate) return
+    const dateStr = selDate.toISOString().split('T')[0]
+    fetch(`/api/booked-slots?date=${dateStr}`)
+      .then(r => r.json())
+      .then(d => setBookedSlots(d.times || []))
+  }, [selDate])
 
   const yr = viewDate.getFullYear(), mo = viewDate.getMonth()
   const firstDow = new Date(yr, mo, 1).getDay()
@@ -133,7 +143,7 @@ export default function Home() {
                           ...(!isAvail ? s.dayBtnDisabled : {}),
                         }}
                         disabled={!isAvail}
-                        onClick={() => { setSelDate(dt); setSelTime(null) }}
+                        onClick={() => { setSelDate(dt); setSelTime(null); setBookedSlots([]) }}
                       >{d}</button>
                     )
                   })}
@@ -146,13 +156,18 @@ export default function Home() {
                     {slots.length === 0
                       ? <p style={s.noSlots}>Sin horarios disponibles este día.</p>
                       : <div style={s.timesGrid}>
-                          {slots.map(t => (
-                            <button
-                              key={t}
-                              style={{ ...s.timeBtn, ...(selTime === t ? s.timeBtnSel : {}) }}
-                              onClick={() => setSelTime(t)}
-                            >{t}</button>
-                          ))}
+                          {slots.map(t => {
+                            const isBooked = bookedSlots.includes(t)
+                            const isSel = selTime === t
+                            return (
+                              <button
+                                key={t}
+                                disabled={isBooked}
+                                style={{ ...s.timeBtn, ...(isSel ? s.timeBtnSel : {}), ...(isBooked ? s.timeBtnBooked : {}) }}
+                                onClick={() => !isBooked && setSelTime(t)}
+                              >{t}{isBooked ? ' ✗' : ''}</button>
+                            )
+                          })}
                         </div>
                     }
                   </div>
@@ -279,6 +294,7 @@ const s = {
   timesGrid: { display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:8 },
   timeBtn: { border:'1px solid var(--border)', borderRadius:8, padding:'8px 0', fontSize:13, background:'none', color:'var(--text)', cursor:'pointer', textAlign:'center' },
   timeBtnSel: { background:'var(--accent)', color:'#fff', borderColor:'var(--accent)' },
+  timeBtnBooked: { opacity:0.35, cursor:'not-allowed', textDecoration:'line-through' },
   btnRow: { padding:'16px 28px', borderTop:'1px solid var(--border)', display:'flex', justifyContent:'flex-end', gap:10, marginTop:'auto' },
   btnPrimary: { fontSize:13, padding:'9px 20px', borderRadius:8, border:'none', background:'var(--accent)', color:'#fff', fontWeight:500 },
   btnSecondary: { fontSize:13, padding:'9px 20px', borderRadius:8, border:'1px solid var(--border)', background:'none', color:'var(--text)' },
